@@ -113,7 +113,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return DB.insert(DatabaseMaster.Message.table_Name,null,data);
     }
     //Retrieve All message from Database
-   /* public ArrayList<Message>getAllMessages(){
+    public ArrayList<Message>getAllMessages(){
         SQLiteDatabase Db=getReadableDatabase();
         //SELECT messageID.subject from message where messageID=1
         String MessageArray[]={DatabaseMaster.Message._ID, DatabaseMaster.Message.Col_User,DatabaseMaster.Message.Col_Subject,DatabaseMaster.Message.Col_Message};
@@ -139,7 +139,16 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return list;
     }
-*/
+    public int GetUserID(String name) {
+        SQLiteDatabase db = getReadableDatabase();
+        String where = DatabaseMaster.User.Col_Name +" LIKE '%"+name+"%'";
+        Cursor c = db.query(true, DatabaseMaster.User.table_Name, null,
+                where, null, null, null, null, null);
+        if(c.getCount()>0)
+            return c.getInt(0);
+        else
+            return 0;
+    }
 
 
     @Override

@@ -28,16 +28,16 @@ public class TeacherActivity extends AppCompatActivity {
         SenMessage.findViewById(R.id.MeMessage);
         Subject=findViewById(R.id.MeSubject);
         Messagee=findViewById(R.id.MeMessage);
-
+        int userid=db.GetUserID(user);
 
         SenMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Message m=new Message();
-
+                m.setMessage(SenMessage.getText().toString());
+                m.setSubject(Subject.getText().toString());
+                m.setUserID(userid);
                 db.SendMessage(m);
-
-
             }
         });
 
