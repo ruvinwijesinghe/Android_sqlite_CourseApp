@@ -12,13 +12,15 @@
         <activity android:name=".UI.Student"></activity>
         <activity android:name=".UI.TeacherActivity" />
         <activity android:name=".UI.RegisterActivity" />
-        <activity android:name=".UI.LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".UI.LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity">
+
         </activity>
     </application>
 

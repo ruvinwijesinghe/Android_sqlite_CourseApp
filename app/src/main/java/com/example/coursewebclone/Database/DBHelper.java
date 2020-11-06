@@ -35,6 +35,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY("+DatabaseMaster.Message.Col_User+") REFERENCES "+ DatabaseMaster.User.table_Name+"("+DatabaseMaster.User._ID+"))";
         db.execSQL(messageTable);
     }
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    }
     //Register USer
     public long RegisterUser(User user){
         SQLiteDatabase DB=getWritableDatabase();
@@ -139,20 +143,38 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return list;
     }
-    public int GetUserID(String name) {
-        SQLiteDatabase db = getReadableDatabase();
-        String where = DatabaseMaster.User.Col_Name +" LIKE '%"+name+"%'";
-        Cursor c = db.query(true, DatabaseMaster.User.table_Name, null,
-                where, null, null, null, null, null);
-        if(c.getCount()>0)
-            return c.getInt(0);
-        else
-            return 0;
+    public List getuserid(String name){
+        SQLiteDatabase db=getReadableDatabase();
+        String[] projection={
+                DatabaseMaster.User._ID,
+                DatabaseMaster.User.Col_Password,
+                DatabaseMaster.User.Col_Type,
+                DatabaseMaster.User.Col_Name,
+
+        };
+        String selection=DatabaseMaster.User.Col_Name+"=?";
+        String[] selectionArgs={name};
+
+        Cursor cursor=db.query(DatabaseMaster.User.table_Name,projection,selection,selectionArgs,null,null,null);
+        List userInf= new ArrayList<>();
+
+        while(cursor.moveToNext()){
+            Integer id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseMaster.User._ID));
+            String username = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseMaster.User.Col_Name));
+            String password = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseMaster.User.Col_Password));
+            String type = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseMaster.User.Col_Type));
+
+            userInf.add(username);
+            userInf.add(password);
+            userInf.add(type);
+            userInf.add(id);
+
+        }
+        cursor.close();
+        return userInf;
+
     }
 
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-    }
 }

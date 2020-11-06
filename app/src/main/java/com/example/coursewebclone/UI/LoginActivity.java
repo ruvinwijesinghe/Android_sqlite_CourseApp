@@ -25,6 +25,14 @@ public class LoginActivity extends AppCompatActivity {
         Name=findViewById(R.id.Lo_Name);
         password=findViewById(R.id.Lo_Pass);
         btnRegister=findViewById(R.id.LoReg);
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(i);
+            }
+        });
     }
     public void signIn(View view)
     {
@@ -36,12 +44,12 @@ public class LoginActivity extends AppCompatActivity {
         String name=Name.getText().toString();
         String pass=password.getText().toString();
 
-        String type1 = "Teacher";
+        String type1 = "teacher";
         String type2 = "Student";
 
         if(usernames.indexOf(name)>=0)
         {
-            if(passwords.get(usernames.indexOf(name)).equals(password))
+            if(passwords.get(usernames.indexOf(name)).equals(pass))
             {
                 if(types.get(usernames.indexOf(name)).equals(type1)){
                     Intent intent = new Intent(this,TeacherActivity.class);
